@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonButton extends StatelessWidget {
   const CommonButton({
@@ -7,17 +8,18 @@ class CommonButton extends StatelessWidget {
     this.ontap,
     required this.text,
     this.colorchange = false,
+    this.size,
   }) : super(key: key);
 
   final bool colorchange;
   final GestureTapCallback? ontap;
   final String text;
-
+  final double? size;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 50,
+      height: 50.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 5,
@@ -32,7 +34,7 @@ class CommonButton extends StatelessWidget {
         },
         child: Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: size ?? 18.sp),
         ),
       ),
     );
@@ -46,17 +48,19 @@ class CommonButtonGrey extends StatelessWidget {
     this.ontap,
     required this.text,
     this.colorchange = false,
+    this.size,
   }) : super(key: key);
 
   final bool colorchange;
   final GestureTapCallback? ontap;
   final String text;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 50,
+      height: 50.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 5,
@@ -71,7 +75,7 @@ class CommonButtonGrey extends StatelessWidget {
         },
         child: Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: size ?? 18.sp),
         ),
       ),
     );

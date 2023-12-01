@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jbf/Utils/sizebox.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -56,7 +58,6 @@ class BillWidget extends StatelessWidget {
       totalQuantity += item['quantity'];
       totalAmount += item['quantity'] * item['rate'];
     }
-    
 
     return Container(
       padding: EdgeInsets.all(16.0),
@@ -68,12 +69,12 @@ class BillWidget extends StatelessWidget {
         children: [
           Text(
             'Jay Bajrang Foods',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8.0),
+          8.h.height,
           Text(
               'Kashimira, Navin Gaothan, S No.82 Part 1, St.Xavier School Road, Mira Road(E) Maharashtra Thane - 401107 Mobile : 9699997596/8898200140'),
-          SizedBox(height: 8),
+          8.h.height,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -82,11 +83,11 @@ class BillWidget extends StatelessWidget {
               Text('Bill No: ${data[index]['billNo']}'),
             ],
           ),
-          SizedBox(height: 8),
+          8.h.height,
           Text('${data[index]['shopName']}'),
-          SizedBox(height: 8),
+          8.h.height,
           Text('${data[index]['shopAddress']}'),
-          SizedBox(height: 8),
+          8.h.height,
           Table(
             columnWidths: {
               0: FlexColumnWidth(3), // Item Name

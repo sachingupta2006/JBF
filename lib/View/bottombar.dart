@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Controller/home_controller.dart';
 import 'package:jbf/Utils/common_button.dart';
@@ -44,7 +45,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
                       children: [
                         Column(mainAxisSize: MainAxisSize.min, children: [
                           Text('Are you sure you want to exit the app?'),
-                          20.0.height,
+                          20.h.height,
                           CommonButton(
                             text: 'Yes, Exit',
                             ontap: () {
@@ -52,7 +53,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
                               exitBool = true;
                             },
                           ),
-                          20.0.height,
+                          20.h.height,
                           CommonButtonGrey(
                               text: 'No, Cancel', ontap: () => Get.back())
                         ])
@@ -65,7 +66,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
             extendBody: true,
             body: screens[selectedIndex.value],
             bottomNavigationBar: Container(
-              padding: EdgeInsets.symmetric(vertical: 20),
+              padding: EdgeInsets.symmetric(vertical: 20.h),
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -93,20 +94,20 @@ class _CustomBottomBarState extends State<CustomBottomBar>
           homeController.edit.value = false;
         },
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
             decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(active ? 0.2 : 0),
                 borderRadius: BorderRadius.circular(25)),
             child: Row(children: [
-              Icon(Icons.home,size: 30,color: active ? Colors.blue : Colors.black,),
+              Icon(Icons.home,size: 30.h,color: active ? Colors.blue : Colors.black,),
               // Image.asset(active ? pngBlue[index] : pngBlack[index], width: 20),
               active
                   ? Text('  ${name[index]}',
                       style: TextStyle(
                           color: Colors.blue,
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold))
-                  : 0.0.width
+                  : 0.w.width
             ])));
   }
 }
