@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   var edit = false.obs;
+  var customerIndex = 0.obs;
+
   var customerDetails = [
     {
       'name': 'Sachin',
@@ -26,6 +28,19 @@ class HomeController extends GetxController {
     }
   ].obs;
 
+  var jBFproducts = [
+    'JBF-SEV (20KG)',
+    'JBF BUNDLE SEV (5KG)',
+    'JBF SPECIAL SEV (20KG)',
+    'FRY NOODLES',
+    'SPECIAL PURI',
+    'LEHAR DAL',
+    'FRY DAL',
+    'FRY NOODLES 900g',
+    'RAJAT SEV',
+    'CHANNA BESAN SEV',
+    'PURANA'
+  ];
   editCustomerDetails(
       int index, String name, String address, String area, String phone) {
     customerDetails[index]['name'] = name;
