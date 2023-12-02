@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:jbf/Controller/home_controller.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
+import 'package:jbf/View/Customer/perticular_customer_details.dart';
 import 'package:jbf/View/dashboard.dart';
 
-import 'add_customers.dart';
+import 'Customer/add_customers.dart';
 
 final selectedIndex = 0.obs;
 
@@ -22,7 +23,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
   var screens = [
     const AddCustomers(),
     const Dashboard(),
-    const Dashboard(),
+    const PerticularCustomerDetails(),
     const Dashboard(),
   ];
   List name = ['Home', 'Visits', 'Share', 'Profile'];
@@ -34,7 +35,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
         onWillPop: () async {
           bool exitBool = false;
           await Get.dialog(AlertDialog(
-              contentPadding: EdgeInsets.all(25),
+              contentPadding: EdgeInsets.all(25.w),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               content: Container(
@@ -66,7 +67,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
             extendBody: true,
             body: screens[selectedIndex.value],
             bottomNavigationBar: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.h),
+              padding: EdgeInsets.symmetric(vertical: 10.h),
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -99,7 +100,11 @@ class _CustomBottomBarState extends State<CustomBottomBar>
                 color: Colors.blue.withOpacity(active ? 0.2 : 0),
                 borderRadius: BorderRadius.circular(25)),
             child: Row(children: [
-              Icon(Icons.home,size: 30.h,color: active ? Colors.blue : Colors.black,),
+              Icon(
+                Icons.home,
+                size: 30.h,
+                color: active ? Colors.blue : Colors.black,
+              ),
               // Image.asset(active ? pngBlue[index] : pngBlack[index], width: 20),
               active
                   ? Text('  ${name[index]}',

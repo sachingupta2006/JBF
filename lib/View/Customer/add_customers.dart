@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/sizebox.dart';
+import 'package:jbf/View/Customer/perticular_customer_details.dart';
 import 'package:jbf/main.dart';
 
-import '../Utils/common_button.dart';
-import '../Utils/custom_textformfield.dart';
+import '../../Utils/common_button.dart';
+import '../../Utils/custom_textformfield.dart';
 
 class AddCustomers extends StatelessWidget {
   const AddCustomers({super.key});
@@ -13,7 +14,7 @@ class AddCustomers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Customer Details'), actions: [
+        appBar: AppBar(title: Text('Add Customer Details'), actions: [
           GestureDetector(
               onTap: () {
                 Get.bottomSheet(addCustomer(context));
@@ -34,6 +35,10 @@ class AddCustomers extends StatelessWidget {
                     '${homeController.customerDetails[index]['phone']}';
                 var code = homeController.customerDetails[index]['code'];
                 return ListTile(
+                  onTap: () {
+                    Get.to(() => PerticularCustomerDetails());
+                    print('object123');
+                  },
                   onLongPress: () {
                     Get.dialog(AlertDialog(
                         contentPadding: EdgeInsets.all(25.w),
