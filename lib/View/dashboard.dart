@@ -23,17 +23,6 @@ class Dashboard extends StatelessWidget {
     //       {'name': 'JBF - Bundle (5 kg)', 'quantity': 3, 'rate': 15.0},
     //     ]
     //   },
-    //   {
-    //     'shopName': 'Shop name',
-    //     'billNo': '2',
-    //     'billDate': DateTime.now(),
-    //     'shopAddress': '',
-    //     'items': [
-    //       {'name': 'JBF - Sev (20 kg)', 'quantity': 2, 'rate': 20.0},
-    //       {'name': 'JBF - Bundle (5 kg)', 'quantity': 3, 'rate': 15.0},
-    //     ]
-    //   },
-    // ];
     return Scaffold(
       appBar: AppBar(actions: [
         TextButton(

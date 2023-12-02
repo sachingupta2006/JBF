@@ -28,6 +28,22 @@ class PerticularCustomerDetails extends StatelessWidget {
               subtitle: Text('$address'),
             ),
             Text(phone),
+            10.h.height,
+            ExpansionTile(
+              title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('2 Dec 2023'),
+                  Text('bill no 72'),
+                  Column(
+                    children: [
+                      Text('amount : 2000 rs'),
+                      Text('pending : 500 rs'),
+                    ],
+                  ),
+                ],
+              ),
+              children: [Text('bill data every thing')],
+            ),
             100.h.height
           ],
         ),
