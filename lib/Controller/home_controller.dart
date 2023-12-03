@@ -10,21 +10,21 @@ class HomeController extends GetxController {
       'address': 'manali, kashimira, mira road, thane 401107',
       'area': 'Mumbai',
       'phone': '9004353155',
-      'code': 'MR1'
+      'code': 'M Sac'
     },
     {
       'name': 'Shubham',
       'address': 'om mani tower, hatkesh, mira road, thane 401107',
       'area': 'Mira Bhayander',
       'phone': '7666564623',
-      'code': 'MR2'
+      'code': 'MB Shu'
     },
     {
       'name': 'Amit',
       'address': 'shiv shakti chawl, kashimira, mira road, thane 401107',
       'area': 'Virar',
       'phone': '9820579288',
-      'code': 'MR3'
+      'code': 'V Ami'
     }
   ].obs;
 

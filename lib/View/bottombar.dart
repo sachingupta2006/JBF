@@ -9,7 +9,7 @@ import 'package:jbf/View/dashboard.dart';
 
 import 'Customer/add_customers.dart';
 
-final selectedIndex = 0.obs;
+final selectedIndex = 2.obs;
 
 class CustomBottomBar extends StatefulWidget {
   const CustomBottomBar({super.key});
@@ -23,7 +23,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
   var screens = [
     const AddCustomers(),
     const Dashboard(),
-    const PerticularCustomerDetails(),
+    const PerticularCustomerDetails(indexNo: 0),
     const Dashboard(),
   ];
   List name = ['Home', 'Visits', 'Share', 'Profile'];

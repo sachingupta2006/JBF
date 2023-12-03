@@ -36,7 +36,9 @@ class AddCustomers extends StatelessWidget {
                 var code = homeController.customerDetails[index]['code'];
                 return ListTile(
                   onTap: () {
-                    Get.to(() => PerticularCustomerDetails());
+                    Get.to(() => PerticularCustomerDetails(
+                          indexNo: index,
+                        ));
                     print('object123');
                   },
                   onLongPress: () {
@@ -157,7 +159,7 @@ class AddCustomers extends StatelessWidget {
               child: Column(
                 children: [
                   20.h.height,
-                  CustomTextFormField(
+                  CustomTextFormField(keyboardType: TextInputType.name,
                       controller: customerNameTEC, hint: 'Customer Name'),
                   20.h.height,
                   CustomTextFormField(
@@ -198,13 +200,18 @@ class AddCustomers extends StatelessWidget {
                   //     :
                   CommonButton(
                       ontap: () async {
+                        String code = '${selectedLoaction.value.split(' ').map((e) {
+                              if (e.isNotEmpty) {
+                                return e[0].toUpperCase();
+                              }
+                              return '';
+                            }).toList().join()} ${customerNameTEC.text.length < 3 ? customerNameTEC.text : customerNameTEC.text.substring(0, 3)}';
                         Map<String, String> newCustomerData = {
                           'name': customerNameTEC.text,
                           'address': addressTEC.text,
                           'area': selectedLoaction.value,
                           'phone': phoneTEC.text,
-                          'code':
-                              '${selectedLoaction.substring(0, 3)} ${homeController.customerDetails.length + 1}'
+                          'code': code
                         };
                         homeController.customerDetails.add(newCustomerData);
                         Get.back();

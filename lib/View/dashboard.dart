@@ -27,8 +27,7 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(actions: [
         TextButton(
             onPressed: () {
-              Get.to(() => PerticularCustomerDetails());
-            print('dddd');
+              Get.to(() => PerticularCustomerDetails(indexNo: homeController.customerIndex.value));
             },
             child: Text(
               'View Previous Bills',
