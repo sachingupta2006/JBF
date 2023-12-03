@@ -5,7 +5,7 @@ import 'package:jbf/Controller/home_controller.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/View/Customer/perticular_customer_details.dart';
-import 'package:jbf/View/dashboard.dart';
+import 'package:jbf/View/bill.dart';
 
 import 'Customer/add_customers.dart';
 
@@ -22,9 +22,9 @@ class _CustomBottomBarState extends State<CustomBottomBar>
     with SingleTickerProviderStateMixin {
   var screens = [
     const AddCustomers(),
-    const Dashboard(),
+    const Bill(),
     const PerticularCustomerDetails(indexNo: 0),
-    const Dashboard(),
+    const Bill(),
   ];
   List name = ['Home', 'Visits', 'Share', 'Profile'];
 

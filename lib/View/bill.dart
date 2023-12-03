@@ -6,8 +6,8 @@ import 'package:jbf/View/Customer/perticular_customer_details.dart';
 import 'package:jbf/View/search_customer.dart';
 import 'package:jbf/main.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class Bill extends StatelessWidget {
+  const Bill({super.key});
 
   @override
   Widget build(BuildContext context) {
