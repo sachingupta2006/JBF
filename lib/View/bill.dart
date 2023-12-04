@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/sizebox.dart';
@@ -25,8 +26,6 @@ class Bill extends StatelessWidget {
         20.w.width
       ], title: Text('Bill')),
       body: Obx(() {
-        double totalQuantity = 0.0;
-        double totalAmount = 0.0;
         var cDetails =
             homeController.customerDetails[homeController.customerIndex.value];
 
@@ -104,47 +103,72 @@ class Bill extends StatelessWidget {
                           ],
                         ),
                         ...List.generate(4, (indx) {
+                          var products = homeController.jBFproducts[indx];
+                          var rateCont = homeController.existingRateTEC[indx];
+                          var qCont = homeController.existingQuantityTEC[indx];
+                          double a = rateCont.text == ''
+                              ? 0
+                              : double.parse(rateCont.text);
+                          double b =
+                              qCont.text == '' ? 0 : double.parse(qCont.text);
+                          String totalAmount = '${a * b}';
                           return TableRow(
                             children: [
-                              padText(homeController.jBFproducts[indx]),
-                              padCenterText('5'),
-                              padCenterText('70'),
-                              padCenterText('350'),
+                              padText(products),
+                              textFieldInt(controller: qCont),
+                              textFieldInt(controller: rateCont),
+                              textFieldInt(
+                                  showCursor: false,
+                                  keyboardType: TextInputType.none,
+                                  text: totalAmount == '0.0' ? '' : totalAmount)
                             ],
                           );
                         }),
                         ...List.generate(
                             homeController.selectedProductList.length, (indx) {
+                          var rateCont = homeController.newRateTEC[indx];
+                          var qCont = homeController.newQuantityTEC[indx];
+                          double a = rateCont.text == ''
+                              ? 0
+                              : double.parse(rateCont.text);
+                          double b =
+                              qCont.text == '' ? 0 : double.parse(qCont.text);
+                          String totalAmount = '${a * b}';
                           return TableRow(
                             children: [
                               padText(homeController.selectedProductList[indx]),
-                              padCenterText('5'),
-                              padCenterText('70'),
-                              padCenterText('350'),
+                              textFieldInt(controller: qCont),
+                              textFieldInt(controller: rateCont),
+                              textFieldInt(
+                                  showCursor: false,
+                                  keyboardType: TextInputType.none,
+                                  text: totalAmount == '0.0' ? '' : totalAmount)
                             ],
                           );
                         }),
-                        TableRow(
-                          children: [
-                            GestureDetector(
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Get.bottomSheet(selectProduct());
-                                  },
-                                  child: Text('')),
-                            ),
-                            // padCenterText(''),
-                            padCenterText(''),
-                            padCenterText(''),
-                            padCenterText(''),
-                          ],
-                        ),
+                        TableRow(children: [
+                          GestureDetector(
+                              onTap: () => Get.bottomSheet(selectProduct()),
+                              child: Text('')),
+                          padCenterText(''),
+                          textFieldInt(
+                              showCursor: false,
+                              keyboardType: TextInputType.none,
+                              text: ''),
+                          padCenterText('')
+                        ]),
                         TableRow(
                           children: [
                             padCenterText('Grand Total'),
-                            padCenterText('${totalQuantity.toInt()}'),
-                            Text(''),
-                            padCenterText('$totalAmount'),
+                            textFieldInt(
+                                showCursor: false,
+                                keyboardType: TextInputType.none,
+                                text: homeController.grandTotalQuantity()),
+                            padCenterText(''),
+                            textFieldInt(
+                                showCursor: false,
+                                keyboardType: TextInputType.none,
+                                text: homeController.grandTotalAll())
                           ],
                         ),
                       ],
@@ -189,10 +213,11 @@ class Bill extends StatelessWidget {
                   ...List.generate(homeController.jBFproducts.length - 5,
                       (index) {
                     return InkWell(
-                      onTap: () {
+                      onTap: () async {
                         homeController.productsSelectedSet
                             .add(homeController.jBFproducts[index + 4]);
                         homeController.addProductToTableFunc();
+                        await homeController.newRateNquantityTecAdd();
                         Get.back();
                       },
                       child: Padding(
@@ -230,6 +255,33 @@ class Bill extends StatelessWidget {
     );
   }
 }
+
+Widget textFieldInt(
+    {TextEditingController? controller,
+    String? text,
+    bool? showCursor = true,
+    TextInputType? keyboardType}) {
+  return TableCell(
+    child: TextFormField(
+      showCursor: showCursor,
+      controller: controller,
+      textAlign: TextAlign.center,
+      keyboardType:
+          keyboardType ?? TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$')),
+      ],
+      decoration: InputDecoration(
+          hintText: text,
+          hintStyle: TextStyle(color: Colors.black),
+          border: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0)),
+    ),
+  );
+}
+
 //     // for (var item in data[index]['items']) {
 //     //   totalQuantity += item['quantity'];
 //     //   totalAmount += item['quantity'] * item['rate'];
