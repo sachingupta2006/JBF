@@ -6,10 +6,12 @@ import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/View/Customer/perticular_customer_details.dart';
 import 'package:jbf/View/bill.dart';
+import 'package:jbf/main.dart';
 
 import 'Customer/add_customers.dart';
+import 'Products/add_products.dart';
 
-final selectedIndex = 2.obs;
+final selectedIndex = 3.obs;
 
 class CustomBottomBar extends StatefulWidget {
   const CustomBottomBar({super.key});
@@ -23,8 +25,8 @@ class _CustomBottomBarState extends State<CustomBottomBar>
   var screens = [
     const AddCustomers(),
     const Bill(),
-    const PerticularCustomerDetails(indexNo: 0),
-    const Bill(),
+    PerticularCustomerDetails(indexNo: homeController.customerIndex.value),
+    const AddProducts(),
   ];
   List name = ['Home', 'Visits', 'Share', 'Profile'];
 

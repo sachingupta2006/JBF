@@ -77,12 +77,12 @@ class AddCustomers extends StatelessWidget {
                                                                       .min,
                                                               children: [
                                                                 Text(
-                                                                    'Are you sure you want to exit the app?'),
+                                                                    'Are you sure you want to delete the customer detail?'),
                                                                 20.h.height,
                                                                 CommonButton(
                                                                   size: 10.sp,
                                                                   text:
-                                                                      'Yes, Exit',
+                                                                      'Yes, Delete',
                                                                   ontap: () {
                                                                     Get.back();
                                                                     homeController
@@ -159,8 +159,10 @@ class AddCustomers extends StatelessWidget {
               child: Column(
                 children: [
                   20.h.height,
-                  CustomTextFormField(keyboardType: TextInputType.name,
-                      controller: customerNameTEC, hint: 'Customer Name'),
+                  CustomTextFormField(
+                      keyboardType: TextInputType.name,
+                      controller: customerNameTEC,
+                      hint: 'Customer Name'),
                   20.h.height,
                   CustomTextFormField(
                       keyboardType: TextInputType.phone,
@@ -318,4 +320,5 @@ class AddCustomers extends StatelessWidget {
       ),
     );
   }
+
 }
