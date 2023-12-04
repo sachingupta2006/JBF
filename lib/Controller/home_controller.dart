@@ -97,7 +97,7 @@ class HomeController extends GetxController {
     for (var i = 0; i < newQuantityTEC.length; i++) {
       newQDouble.add(newQuantityTEC[i].text == ''
           ? 0
-          : double.parse(existingQuantityTEC[i].text));
+          : double.parse(newQuantityTEC[i].text));
     }
     List newRDouble = [];
     for (var i = 0; i < newRateTEC.length; i++) {

@@ -149,7 +149,9 @@ class Bill extends StatelessWidget {
                         TableRow(children: [
                           GestureDetector(
                               onTap: () => Get.bottomSheet(selectProduct()),
-                              child: Text('')),
+                              child: Container(
+                                child: Text('\n\n'),
+                              )),
                           padCenterText(''),
                           textFieldInt(
                               showCursor: false,
