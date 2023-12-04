@@ -11,23 +11,12 @@ class Bill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List bills = [
-    //   {
-    //     'shopName': 'Mahalaxmi',
-    //     'billNo': '1',
-    //     'billDate': DateTime.now(),
-    //     'shopAddress':
-    //         'Shop no : 12, Ganga society, Near balaji circle, shanti park, mira road(E), 401107',
-    //     'items': [
-    //       {'name': 'JBF - Sev (20 kg)', 'quantity': 2, 'rate': 20.0},
-    //       {'name': 'JBF - Bundle (5 kg)', 'quantity': 3, 'rate': 15.0},
-    //     ]
-    //   },
     return Scaffold(
       appBar: AppBar(actions: [
         TextButton(
             onPressed: () {
-              Get.to(() => PerticularCustomerDetails(indexNo: homeController.customerIndex.value));
+              Get.to(() => PerticularCustomerDetails(
+                  indexNo: homeController.customerIndex.value));
             },
             child: Text(
               'View Previous Bills',
@@ -114,8 +103,7 @@ class Bill extends StatelessWidget {
                             padCenterText('Total'),
                           ],
                         ),
-                        ...List.generate(homeController.jBFproducts.length,
-                            (indx) {
+                        ...List.generate(4, (indx) {
                           return TableRow(
                             children: [
                               padText(homeController.jBFproducts[indx]),
@@ -125,6 +113,32 @@ class Bill extends StatelessWidget {
                             ],
                           );
                         }),
+                        ...List.generate(
+                            homeController.selectedProductList.length, (indx) {
+                          return TableRow(
+                            children: [
+                              padText(homeController.selectedProductList[indx]),
+                              padCenterText('5'),
+                              padCenterText('70'),
+                              padCenterText('350'),
+                            ],
+                          );
+                        }),
+                        TableRow(
+                          children: [
+                            GestureDetector(
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Get.bottomSheet(selectProduct());
+                                  },
+                                  child: Text('')),
+                            ),
+                            // padCenterText(''),
+                            padCenterText(''),
+                            padCenterText(''),
+                            padCenterText(''),
+                          ],
+                        ),
                         TableRow(
                           children: [
                             padCenterText('Grand Total'),
@@ -143,6 +157,59 @@ class Bill extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+
+  Widget selectProduct() {
+    return Container(
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            20.h.height,
+            Row(
+              children: [
+                30.w.width,
+                Text('Select Product'),
+              ],
+            ),
+            Divider(color: Colors.black, thickness: 1, height: 40.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  20.h.height,
+                  ...List.generate(homeController.jBFproducts.length - 5,
+                      (index) {
+                    return InkWell(
+                      onTap: () {
+                        homeController.productsSelectedSet
+                            .add(homeController.jBFproducts[index + 4]);
+                        homeController.addProductToTableFunc();
+                        Get.back();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 10.h),
+                        child: Text(homeController.jBFproducts[index + 4],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20.sp)),
+                      ),
+                    );
+                  })
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 

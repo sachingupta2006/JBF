@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jbf/Controller/home_controller.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/View/Customer/perticular_customer_details.dart';
@@ -87,14 +86,15 @@ class _CustomBottomBarState extends State<CustomBottomBar>
 
   Widget activeIcon(int index) {
     bool active = false;
-    HomeController homeController = Get.put(HomeController());
     if (selectedIndex.value == index) {
       active = true;
     }
     return InkWell(
         onTap: () {
           selectedIndex.value = index;
-          homeController.edit.value = false;
+          setState(() {
+            
+          });
         },
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),

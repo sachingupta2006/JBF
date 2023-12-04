@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  var edit = false.obs;
   var customerIndex = 0.obs;
+  RxList<String> selectedProductList = <String>[].obs;
+  Set<String> productsSelectedSet = {};
+  addProductToTableFunc() {
+    selectedProductList.value = productsSelectedSet.toList();
+  }
 
   var customerDetails = [
     {
