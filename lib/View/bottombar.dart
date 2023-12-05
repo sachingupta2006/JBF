@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
-import 'package:jbf/View/Customer/perticular_customer_details.dart';
-import 'package:jbf/View/bill.dart';
-import 'package:jbf/main.dart';
-
+import 'package:jbf/View/All%20Bills/all_bills.dart';
+import 'package:jbf/View/Bill/bill.dart';
 import 'Customer/add_customers.dart';
 import 'Products/add_products.dart';
 
-final selectedIndex = 3.obs;
+final selectedIndex = 1.obs;
 
 class CustomBottomBar extends StatefulWidget {
   const CustomBottomBar({super.key});
@@ -24,10 +22,17 @@ class _CustomBottomBarState extends State<CustomBottomBar>
   var screens = [
     const AddCustomers(),
     const Bill(),
-    PerticularCustomerDetails(indexNo: homeController.customerIndex.value),
+    AllBills(),
     const AddProducts(),
   ];
-  List name = ['Home', 'Visits', 'Share', 'Profile'];
+  List name = ['Customer', 'Bill', 'All Bills', 'Products'];
+
+  List bottomIcons = [
+    Icons.person_add_alt,
+    Icons.note_add_outlined,
+    Icons.notes,
+    Icons.production_quantity_limits
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +97,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
     return InkWell(
         onTap: () {
           selectedIndex.value = index;
-          setState(() {
-            
-          });
+          setState(() {});
         },
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
@@ -103,7 +106,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
                 borderRadius: BorderRadius.circular(25)),
             child: Row(children: [
               Icon(
-                Icons.home,
+                bottomIcons[index],
                 size: 30.h,
                 color: active ? Colors.blue : Colors.black,
               ),

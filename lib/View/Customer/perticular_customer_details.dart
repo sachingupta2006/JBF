@@ -25,6 +25,7 @@ class PerticularCustomerDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            20.h.height,
             ListTile(
               leading: Text('$code'),
               trailing: Text('$area'),
@@ -38,63 +39,71 @@ class PerticularCustomerDetails extends StatelessWidget {
                 (index) => Column(
                       children: [
                         15.h.height,
-                        ExpansionTile(
-                          collapsedBackgroundColor:
-                              Colors.blue.withOpacity(0.8),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.w),
+                          child: ExpansionTile(
+                            shape: Border.all(color: Colors.black),
+                            collapsedBackgroundColor:
+                                Colors.blue.withOpacity(0.8),
+                            title: Text('Driver Name'),
+                            leading: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text('Bill No ${index + 1}'),
+                                Text('2 Dec 2023'),
+                              ],
+                            ),
+                            trailing: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text('amount : 2000 rs'),
+                                Text('pending : 500 rs'),
+                              ],
+                            ),
                             children: [
-                              Text('2 Dec 2023'),
-                              Text('bill no 72'),
-                              Column(
+                              Table(
+                                columnWidths: {
+                                  0: FlexColumnWidth(3), // Item Name
+                                  1: FlexColumnWidth(1), // Quantity
+                                  2: FlexColumnWidth(1), // Rate
+                                  3: FlexColumnWidth(
+                                      1), // Total${data[index]['billNo']}
+                                },
+                                border: TableBorder.all(),
                                 children: [
-                                  Text('amount : 2000 rs'),
-                                  Text('pending : 500 rs'),
+                                  TableRow(
+                                    children: [
+                                      padText(' Item Name'),
+                                      padCenterText('Quantity'),
+                                      padCenterText('Rate'),
+                                      padCenterText('Total'),
+                                    ],
+                                  ),
+                                  ...List.generate(4, (indx) {
+                                    return TableRow(
+                                      children: [
+                                        padText(
+                                            homeController.jBFproducts[indx]),
+                                        padCenterText('5'),
+                                        padCenterText('70'),
+                                        padCenterText('350'),
+                                      ],
+                                    );
+                                  }),
+                                  TableRow(
+                                    children: [
+                                      padCenterText('Grand Total'),
+                                      padCenterText('${totalQuantity.toInt()}'),
+                                      Text(''),
+                                      padCenterText('$totalAmount'),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
                           ),
-                          children: [
-                            Table(
-                              columnWidths: {
-                                0: FlexColumnWidth(3), // Item Name
-                                1: FlexColumnWidth(1), // Quantity
-                                2: FlexColumnWidth(1), // Rate
-                                3: FlexColumnWidth(
-                                    1), // Total${data[index]['billNo']}
-                              },
-                              border: TableBorder.all(),
-                              children: [
-                                TableRow(
-                                  children: [
-                                    padText(' Item Name'),
-                                    padCenterText('Quantity'),
-                                    padCenterText('Rate'),
-                                    padCenterText('Total'),
-                                  ],
-                                ),
-                                ...List.generate(
-                                    homeController.jBFproducts.length, (indx) {
-                                  return TableRow(
-                                    children: [
-                                      padText(homeController.jBFproducts[indx]),
-                                      padCenterText('5'),
-                                      padCenterText('70'),
-                                      padCenterText('350'),
-                                    ],
-                                  );
-                                }),
-                                TableRow(
-                                  children: [
-                                    padCenterText('Grand Total'),
-                                    padCenterText('${totalQuantity.toInt()}'),
-                                    Text(''),
-                                    padCenterText('$totalAmount'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
                         )
                       ],
                     )),

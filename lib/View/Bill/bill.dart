@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/View/Customer/perticular_customer_details.dart';
-import 'package:jbf/View/search_customer.dart';
+import 'package:jbf/View/Bill/search_customer.dart';
 import 'package:jbf/main.dart';
 
 class Bill extends StatelessWidget {
@@ -33,8 +33,8 @@ class Bill extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.all(16.0),
-                padding: EdgeInsets.all(16.0),
+                margin: EdgeInsets.all(6.w),
+                padding: EdgeInsets.all(6.w),
                 decoration: BoxDecoration(border: Border.all()),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,17 +87,18 @@ class Bill extends StatelessWidget {
                     8.h.height,
                     Table(
                       columnWidths: {
-                        0: FlexColumnWidth(3), // Item Name
+                        0: FlexColumnWidth(2.5), // Item Name
                         1: FlexColumnWidth(1), // Quantity
                         2: FlexColumnWidth(1), // Rate
-                        3: FlexColumnWidth(1), // Total${data[index]['billNo']}
+                        3: FlexColumnWidth(
+                            1.3), // Total${data[index]['billNo']}
                       },
                       border: TableBorder.all(),
                       children: [
                         TableRow(
                           children: [
                             padText(' Item Name'),
-                            padCenterText('Quantity'),
+                            padCenterText('(KG)'),
                             padCenterText('Rate'),
                             padCenterText('Total'),
                           ],
@@ -120,7 +121,10 @@ class Bill extends StatelessWidget {
                               textFieldInt(
                                   showCursor: false,
                                   keyboardType: TextInputType.none,
-                                  text: totalAmount == '0.0' ? '' : totalAmount)
+                                  text:
+                                      totalAmount == '0.0' || totalAmount == '0'
+                                          ? ''
+                                          : totalAmount)
                             ],
                           );
                         }),
@@ -142,10 +146,27 @@ class Bill extends StatelessWidget {
                               textFieldInt(
                                   showCursor: false,
                                   keyboardType: TextInputType.none,
-                                  text: totalAmount == '0.0' ? '' : totalAmount)
+                                  text:
+                                      totalAmount == '0.0' || totalAmount == '0'
+                                          ? ''
+                                          : totalAmount)
                             ],
                           );
                         }),
+                        !homeController.puranaCheckBox.value
+                            ? TableRow(children: [
+                                0.0.width,
+                                0.0.width,
+                                0.0.width,
+                                0.0.width
+                              ])
+                            : TableRow(children: [
+                                padText(' Purana'),
+                                Text(''),
+                                Text(''),
+                                textFieldInt(
+                                    controller: homeController.puranaTEC),
+                              ]),
                         TableRow(children: [
                           GestureDetector(
                               onTap: () => Get.bottomSheet(selectProduct()),
@@ -198,42 +219,55 @@ class Bill extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            20.h.height,
+            10.h.height,
             Row(
               children: [
                 30.w.width,
-                Text('Select Product'),
+                Text('Select Product',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
-            Divider(color: Colors.black, thickness: 1, height: 40.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  20.h.height,
-                  ...List.generate(homeController.jBFproducts.length - 5,
-                      (index) {
-                    return InkWell(
-                      onTap: () async {
-                        homeController.productsSelectedSet
-                            .add(homeController.jBFproducts[index + 4]);
-                        homeController.addProductToTableFunc();
-                        await homeController.newRateNquantityTecAdd();
-                        Get.back();
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 10.h),
-                        child: Text(homeController.jBFproducts[index + 4],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20.sp)),
-                      ),
-                    );
-                  })
-                ],
-              ),
-            )
+            Divider(color: Colors.black, thickness: 1, height: 10.h),
+            Row(
+              children: [
+                Obx(
+                  () => Checkbox(
+                    value: homeController.puranaCheckBox.value,
+                    onChanged: (value) {
+                      homeController.puranaCheckBox.value =
+                          !homeController.puranaCheckBox.value;
+                    },
+                  ),
+                ),
+                Text('Purana', style: TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 20.h.height,
+                ...List.generate(homeController.jBFproducts.length - 4,
+                    (index) {
+                  return InkWell(
+                    onTap: () async {
+                      homeController.productsSelectedSet
+                          .add(homeController.jBFproducts[index + 4]);
+                      homeController.addProductToTableFunc();
+                      await homeController.newRateNquantityTecAdd();
+                      Get.back();
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 10.h),
+                      child: Text(homeController.jBFproducts[index + 4],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.sp)),
+                    ),
+                  );
+                })
+              ],
+            ),
+            50.h.height
           ],
         ),
       ),
@@ -283,8 +317,3 @@ Widget textFieldInt(
     ),
   );
 }
-
-//     // for (var item in data[index]['items']) {
-//     //   totalQuantity += item['quantity'];
-//     //   totalAmount += item['quantity'] * item['rate'];
-//     // }

@@ -52,7 +52,7 @@ class HomeController extends GetxController {
       total.value += b;
     }
 
-    return total.value.toString();
+    return total.value == 0.0 || total.value == 0 ? '' : total.value.toString();
   }
 
   grandTotalRate() {
@@ -91,9 +91,7 @@ class HomeController extends GetxController {
       gT += existingQDouble[i] * existingRDouble[i];
     }
 
-
-
-  List newQDouble = [];
+    List newQDouble = [];
     for (var i = 0; i < newQuantityTEC.length; i++) {
       newQDouble.add(newQuantityTEC[i].text == ''
           ? 0
@@ -101,21 +99,18 @@ class HomeController extends GetxController {
     }
     List newRDouble = [];
     for (var i = 0; i < newRateTEC.length; i++) {
-      newRDouble.add(newRateTEC[i].text == ''
-          ? 0
-          : double.parse(newRateTEC[i].text));
+      newRDouble
+          .add(newRateTEC[i].text == '' ? 0 : double.parse(newRateTEC[i].text));
     }
     for (var i = 0; i < newQDouble.length; i++) {
       gT += newQDouble[i] * newRDouble[i];
     }
+   !puranaCheckBox.value ? null : gT += puranaTEC.text == '' ? 0 : double.parse(puranaTEC.text);
 
-
-
-
-      return gT.toString();
-
+    return gT == 0.0 || gT == 0 ? '' : gT.toString();
   }
 
+  TextEditingController puranaTEC = TextEditingController();
   var customerDetails = [
     {
       'name': 'Sachin',
@@ -151,7 +146,6 @@ class HomeController extends GetxController {
     'FRY NOODLES 900g',
     'RAJAT SEV',
     'CHANNA BESAN SEV',
-    'PURANA'
   ];
   editCustomerDetails(
       int index, String name, String address, String area, String phone) {
@@ -161,4 +155,6 @@ class HomeController extends GetxController {
     customerDetails[index]['phone'] = phone;
     update();
   }
+
+  var puranaCheckBox = false.obs;
 }
