@@ -74,7 +74,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
             extendBody: true,
             body: screens[selectedIndex.value],
             bottomNavigationBar: Container(
-              padding: EdgeInsets.symmetric(vertical: 10.h),
+              padding: EdgeInsets.symmetric(vertical: 5.h),
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -121,7 +121,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
           setState(() {});
         },
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 5.h),
             decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(active ? 0.2 : 0),
                 borderRadius: BorderRadius.circular(25)),
