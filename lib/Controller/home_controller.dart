@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:jbf/main.dart';
 
 class HomeController extends GetxController {
   var customerIndex = 0.obs;
@@ -105,7 +106,9 @@ class HomeController extends GetxController {
     for (var i = 0; i < newQDouble.length; i++) {
       gT += newQDouble[i] * newRDouble[i];
     }
-   !puranaCheckBox.value ? null : gT += puranaTEC.text == '' ? 0 : double.parse(puranaTEC.text);
+    !puranaCheckBox.value
+        ? null
+        : gT += puranaTEC.text == '' ? 0 : double.parse(puranaTEC.text);
 
     return gT == 0.0 || gT == 0 ? '' : gT.toString();
   }
@@ -157,4 +160,7 @@ class HomeController extends GetxController {
   }
 
   var puranaCheckBox = false.obs;
+
+  var salesmanNames = ['Badal', 'Manoj', 'Vinod'].obs;
+  var selectedSalesman = 'Manoj'.obs;
 }

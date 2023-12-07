@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/sizebox.dart';
-import 'package:jbf/View/Customer/perticular_customer_details.dart';
+import 'package:jbf/View/Bottom%20Bar/Customer/perticular_customer_details.dart';
 import 'package:jbf/main.dart';
 
-import '../../Utils/common_button.dart';
-import '../../Utils/custom_textformfield.dart';
+import '../../../Utils/common_button.dart';
+import '../../../Utils/custom_textformfield.dart';
 
 class AddCustomers extends StatelessWidget {
   const AddCustomers({super.key});
@@ -14,14 +14,21 @@ class AddCustomers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Add Customer Details'), actions: [
-          GestureDetector(
-              onTap: () {
-                Get.bottomSheet(addCustomer(context));
-              },
-              child: Icon(Icons.add)),
-          20.w.width
-        ]),
+        appBar: AppBar(
+            leading: GestureDetector(
+                onTap: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                child: Icon(Icons.menu)),
+            title: Text('Add Customer Details'),
+            actions: [
+              GestureDetector(
+                  onTap: () {
+                    Get.bottomSheet(addCustomer(context));
+                  },
+                  child: Icon(Icons.add)),
+              20.w.width
+            ]),
         body: Obx(
           () => ListView.separated(
               itemBuilder: (context, index) {
@@ -172,11 +179,12 @@ class AddCustomers extends StatelessWidget {
                   20.h.height,
                   CustomTextFormField(controller: addressTEC, hint: 'Address'),
                   20.h.height,
-                  Row(
+                  Wrap(
                     children: [
                       Text('Choose area of shop :  '),
                       Obx(
                         () => DropdownButton(
+                          underline: 0.0.height,
                           elevation: 0,
                           items: location.map((value) {
                             return DropdownMenuItem(
@@ -271,11 +279,12 @@ class AddCustomers extends StatelessWidget {
                   20.h.height,
                   CustomTextFormField(controller: addressTEC, hint: 'Address'),
                   20.h.height,
-                  Row(
+                  Wrap(
                     children: [
                       Text('Choose area of shop :  '),
                       Obx(
                         () => DropdownButton(
+                          underline: 0.0.height,
                           elevation: 0,
                           items: location.map((value) {
                             return DropdownMenuItem(
@@ -320,5 +329,4 @@ class AddCustomers extends StatelessWidget {
       ),
     );
   }
-
 }

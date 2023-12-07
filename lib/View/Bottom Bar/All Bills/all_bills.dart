@@ -9,7 +9,15 @@ class AllBills extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('All Bills'), actions: [Text('\nDecember'),15.w.width],),
+      appBar: AppBar(
+        leading: GestureDetector(
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
+            child: Icon(Icons.menu)),
+        title: Text('All Bills'),
+        actions: [Text('\nDecember'), 15.w.width],
+      ),
       body: ListView.separated(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
           itemBuilder: (context, index) {
@@ -24,13 +32,14 @@ class AllBills extends StatelessWidget {
                     Text('2 Dec 2023'),
                   ],
                 ),
-                trailing:  Column(  crossAxisAlignment: CrossAxisAlignment.start,
+                trailing: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('amount : 2000 rs'),
-                        Text('pending : 500 rs'),
-                      ],
-                    ),
+                  children: [
+                    Text('amount : 2000 rs'),
+                    Text('pending : 500 rs'),
+                  ],
+                ),
                 title: Text('Shubham Gupta'),
                 children: [
                   Table(

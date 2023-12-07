@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
-import 'package:jbf/View/All%20Bills/all_bills.dart';
-import 'package:jbf/View/Bill/bill.dart';
+import 'package:jbf/View/Bottom%20Bar/All%20Bills/all_bills.dart';
+import 'package:jbf/View/Bottom%20Bar/Bill/bill.dart';
 import 'Customer/add_customers.dart';
 import 'Products/add_products.dart';
 
@@ -68,6 +68,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
           return exitBool;
         },
         child: Scaffold(
+            drawer: drawer(),
             backgroundColor: Colors.white,
             resizeToAvoidBottomInset: false,
             extendBody: true,
@@ -89,6 +90,26 @@ class _CustomBottomBarState extends State<CustomBottomBar>
     );
   }
 
+  Widget drawer() {
+    return SafeArea(
+        child: Container(
+            width: MediaQuery.sizeOf(context).width / 1.5,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 50.h),
+            height: double.infinity,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
+                )),
+            child: Column(
+              children: [
+                Text('Konsa Konsa Feater chaiye batao'),
+                Divider(thickness: 1.w),
+              ],
+            )));
+  }
+
   Widget activeIcon(int index) {
     bool active = false;
     if (selectedIndex.value == index) {
@@ -104,20 +125,19 @@ class _CustomBottomBarState extends State<CustomBottomBar>
             decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(active ? 0.2 : 0),
                 borderRadius: BorderRadius.circular(25)),
-            child: Row(children: [
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
               Icon(
                 bottomIcons[index],
-                size: 30.h,
+                size: 20.h,
                 color: active ? Colors.blue : Colors.black,
               ),
               // Image.asset(active ? pngBlue[index] : pngBlack[index], width: 20),
-              active
-                  ? Text('  ${name[index]}',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold))
-                  : 0.w.width
+              Text('${name[index]}',
+                  style: TextStyle(
+                      color: active ? Colors.blue : Colors.black,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold))
+              // : 0.w.width
             ])));
   }
 }

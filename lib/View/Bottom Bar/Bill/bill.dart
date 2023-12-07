@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/sizebox.dart';
-import 'package:jbf/View/Customer/perticular_customer_details.dart';
-import 'package:jbf/View/Bill/search_customer.dart';
+import 'package:jbf/View/Bottom%20Bar/Customer/perticular_customer_details.dart';
+import 'package:jbf/View/Bottom%20Bar/Bill/search_customer.dart';
 import 'package:jbf/main.dart';
 
 class Bill extends StatelessWidget {
@@ -13,18 +13,25 @@ class Bill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
-        TextButton(
-            onPressed: () {
-              Get.to(() => PerticularCustomerDetails(
-                  indexNo: homeController.customerIndex.value));
-            },
-            child: Text(
-              'View Previous Bills',
-              style: TextStyle(color: Colors.white),
-            )),
-        20.w.width
-      ], title: Text('Bill')),
+      appBar: AppBar(
+          leading: GestureDetector(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: Icon(Icons.menu)),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Get.to(() => PerticularCustomerDetails(
+                      indexNo: homeController.customerIndex.value));
+                },
+                child: Text(
+                  'View Previous Bills',
+                  style: TextStyle(color: Colors.white),
+                )),
+            20.w.width
+          ],
+          title: Text('Bill')),
       body: Obx(() {
         var cDetails =
             homeController.customerDetails[homeController.customerIndex.value];
@@ -40,17 +47,17 @@ class Bill extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Jay Bajrang Foods',
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                            'Date: ${DateTime.now().toString().substring(0, 10)}'),
-                      ],
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Jay Bajrang \nFoods',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.bold)),
+                          Flexible(
+                              child: Text(
+                                  'Date: ${DateTime.now().toString().substring(0, 10)}'))
+                        ]),
                     8.h.height,
                     Text(
                         'Kashimira, Navin Gaothan, S No.82 Part 1, St.Xavier School Road, Mira Road(E) Maharashtra Thane - 401107 Mobile : 9699997596/8898200140'),
@@ -62,7 +69,30 @@ class Bill extends StatelessWidget {
                         Text('Bill No: 1'),
                       ],
                     ),
-                    8.h.height,
+                    5.h.height,
+                    Row(
+                      children: [
+                        Text('Salesman Name :  '),
+                        Obx(
+                          () => DropdownButton(
+                            elevation: 0,
+                            underline: 0.0.height,
+                            items: homeController.salesmanNames.map((value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              homeController.selectedSalesman.value =
+                                  newValue.toString();
+                            },
+                            value: homeController.selectedSalesman.value,
+                          ),
+                        ),
+                      ],
+                    ),
+                    5.h.height,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

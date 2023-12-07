@@ -12,14 +12,21 @@ class AddProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Add Products Details'), actions: [
-          GestureDetector(
-              onTap: () {
-                Get.bottomSheet(addProduct(context));
-              },
-              child: Icon(Icons.add)),
-          20.w.width
-        ]),
+        appBar: AppBar(
+            leading: GestureDetector(
+                onTap: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                child: Icon(Icons.menu)),
+            title: Text('Add Products Details'),
+            actions: [
+              GestureDetector(
+                  onTap: () {
+                    Get.bottomSheet(addProduct(context));
+                  },
+                  child: Icon(Icons.add)),
+              20.w.width
+            ]),
         body:
             // Obx(() =>
             ListView.builder(
