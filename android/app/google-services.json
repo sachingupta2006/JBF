@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "116821895318",
+    "project_id": "jay-bajrang-foods",
+    "storage_bucket": "jay-bajrang-foods.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116821895318:android:ff8aa38883349255f6fab7",
+        "android_client_info": {
+          "package_name": "com.example.jbf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArTzVUaYpMm3lPzrzvi4UjoNui8r2xIcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
