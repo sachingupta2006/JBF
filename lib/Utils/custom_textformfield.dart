@@ -7,12 +7,14 @@ class CustomTextFormField extends StatelessWidget {
       this.hint,
       this.keyboardType,
       this.maxLength,
-      this.textAling});
+      this.textAling,
+      this.prefix});
   final controller;
   final hint;
   final TextInputType? keyboardType;
   final int? maxLength;
   final TextAlign? textAling;
+  final Widget? prefix;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -21,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
+          prefix: prefix,
           counterText: '',
           hintText: hint,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),

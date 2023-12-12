@@ -4,38 +4,55 @@ import 'package:get/get.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/custom_textformfield.dart';
 import 'package:jbf/Utils/sizebox.dart';
-import 'package:jbf/View/Bottom%20Bar/bottombar.dart';
+
+import 'verify_otp.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController pwTEC = TextEditingController();
+    TextEditingController phoneTEC = TextEditingController();
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 50.w),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
           children: [
-            250.h.height,
-            CustomTextFormField(textAling: TextAlign.center,
-              maxLength: 4,
-              controller: pwTEC,
+            Image.asset('assets/icon.jpeg'),
+            Text('Phone Verification',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            30.h.height,
+            CustomTextFormField(
+              hint: 'Phone Number',
+              textAling: TextAlign.start,
+              maxLength: 10,
+              controller: phoneTEC,
               keyboardType: TextInputType.number,
+              prefix: Text(
+                '+91 ',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             30.h.height,
             CommonButton(
-                ontap: () {
-                  if (pwTEC.text != '0000') {
-                    Get.snackbar(
-                        'Wrong Password', 'Please enter correct password');
+                ontap: () async {
+                  // await FirebaseAuth.instance.verifyPhoneNumber(
+                  //   phoneNumber: '+91${phoneTEC.text}',
+                  //   verificationCompleted: (PhoneAuthCredential credential) {},
+                  //   verificationFailed: (FirebaseAuthException e) {},
+                  //   codeSent: (String verificationId, int? resendToken) {},
+                  //   codeAutoRetrievalTimeout: (String verificationId) {},
+                  // );
+                  if (phoneTEC.text.length != 10) {
+                    Get.snackbar('Error', 'Please enter correct Phone Number');
                   } else {
-                    Get.to(() => CustomBottomBar());
+                    Get.to(() => VerifyOTP(
+                          phoneNumber: phoneTEC.text,
+                        ));
                   }
                 },
-                text: 'Login'),
+                text: 'Verify OTP'),
           ],
         ),
       ),
