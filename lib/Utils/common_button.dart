@@ -19,14 +19,14 @@ class CommonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 50.h,
+      height: 60.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 5,
           shadowColor: const Color.fromARGB(255, 220, 220, 226),
           backgroundColor: Colors.blue,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         onPressed: () {
@@ -60,14 +60,14 @@ class CommonButtonGrey extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 50.h,
+      height: 60.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 5,
           shadowColor: const Color.fromARGB(255, 220, 220, 226),
           backgroundColor: Colors.grey,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         onPressed: () {

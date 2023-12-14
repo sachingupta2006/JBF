@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,12 +14,15 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController phoneTEC = TextEditingController();
+    var loginLoader = false.obs;
+
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            50.h.height,
             Image.asset('assets/icon.jpeg'),
             Text('Phone Verification',
                 style: TextStyle(fontWeight: FontWeight.bold)),
@@ -35,24 +39,40 @@ class Login extends StatelessWidget {
               ),
             ),
             30.h.height,
-            CommonButton(
-                ontap: () async {
-                  // await FirebaseAuth.instance.verifyPhoneNumber(
-                  //   phoneNumber: '+91${phoneTEC.text}',
-                  //   verificationCompleted: (PhoneAuthCredential credential) {},
-                  //   verificationFailed: (FirebaseAuthException e) {},
-                  //   codeSent: (String verificationId, int? resendToken) {},
-                  //   codeAutoRetrievalTimeout: (String verificationId) {},
-                  // );
-                  if (phoneTEC.text.length != 10) {
-                    Get.snackbar('Error', 'Please enter correct Phone Number');
-                  } else {
-                    Get.to(() => VerifyOTP(
-                          phoneNumber: phoneTEC.text,
-                        ));
-                  }
-                },
-                text: 'Verify OTP'),
+            Obx(
+              () => loginLoader.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : CommonButton(
+                      ontap: () async {
+                        loginLoader.value = true;
+                        try {
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                              verificationCompleted:
+                                  (PhoneAuthCredential credential) {},
+                              verificationFailed: (FirebaseAuthException ex) {
+                                Get.snackbar('Verification Failed', ex.code);
+                                loginLoader.value = false;
+                              },
+                              codeSent:
+                                  (String verificationId, int? resendToken) {
+                                Get.to(() => VerifyOTP(
+                                    phoneNumber: '+91${phoneTEC.text}',
+                                    verificationId: verificationId));
+                                loginLoader.value = false;
+                              },
+                              codeAutoRetrievalTimeout:
+                                  (String verificationId) {
+                                loginLoader.value = false;
+                              },
+                              phoneNumber: '+91${phoneTEC.text}');
+                        } catch (e) {
+                          loginLoader.value = false;
+                          Get.snackbar(
+                              'Error during phone verification', e.toString());
+                        }
+                      },
+                      text: 'Verify OTP'),
+            ),
           ],
         ),
       ),
