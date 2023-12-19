@@ -6,6 +6,7 @@ import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/custom_textformfield.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/View/Bottom%20Bar/bottombar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyOTP extends StatelessWidget {
   const VerifyOTP(
@@ -47,8 +48,11 @@ class VerifyOTP extends StatelessWidget {
                                   smsCode: pwTEC.text.toString());
                           await FirebaseAuth.instance
                               .signInWithCredential(credential)
-                              .then((value) {
+                              .then((value) async {
                             Get.to(() => CustomBottomBar());
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setBool('onBoardDone', true);
                             Get.snackbar('Success', 'OTP Verified');
                           });
                         } catch (e) {
