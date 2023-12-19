@@ -18,26 +18,22 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: 60.h,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          elevation: 5,
-          shadowColor: const Color.fromARGB(255, 220, 220, 226),
-          backgroundColor: Colors.blue,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        onPressed: () {
-          ontap!();
-        },
-        child: Text(
-          text,
-          style: TextStyle(color: Colors.white, fontSize: size ?? 18.sp),
-        ),
-      ),
-    );
+        width: double.infinity,
+        height: 60.h,
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 5,
+              shadowColor: const Color.fromARGB(255, 220, 220, 226),
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              ontap!();
+            },
+            child: Text(text,
+                style: TextStyle(color: Colors.white, fontSize: size ?? 18))));
   }
 }
 
