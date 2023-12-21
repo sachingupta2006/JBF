@@ -163,4 +163,6 @@ class HomeController extends GetxController {
 
   var salesmanNames = ['Badal', 'Manoj', 'Vinod'].obs;
   var selectedSalesman = 'Manoj'.obs;
+
+  String newBillPath = '';
 }

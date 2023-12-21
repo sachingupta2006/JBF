@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,12 +9,13 @@ import 'package:jbf/View/Bottom%20Bar/Bill/new_bill.dart';
 import 'package:jbf/View/Bottom%20Bar/Customer/perticular_customer_details.dart';
 import 'package:jbf/View/Bottom%20Bar/Bill/search_customer.dart';
 import 'package:jbf/main.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Uint8List imageFile = Uint8List(0);
-final pdf = pw.Document();
+Uint8List pdfFile = Uint8List(0);
+var isSaving = false.obs;
 
 ScreenshotController screenshotController = ScreenshotController();
 
@@ -249,23 +251,27 @@ class Bill extends StatelessWidget {
               20.h.height,
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CommonButton(
-                    ontap: () async {
-                      await screenshotController.capture().then((value) {
-                        imageFile = value!;
-                        Get.snackbar('Success', 'image created');
-                      });
+                child: Obx(
+                  () => isSaving.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : CommonButton(
+                          ontap: () async {
+                            isSaving.value = true;
+                            await screenshotController.capture().then((value) {
+                              imageFile = value!;
+                              Get.snackbar('Success', 'image created');
+                            });
 
-                      pdf.addPage(pw.Page(
-                        build: (context) {
-                          final image = pw.MemoryImage(imageFile);
-                          PdfImage.file(pdf.document, bytes: imageFile);
-                          return pw.Center(child: pw.Image(image));
-                        },
-                      ));
-                      Get.to(() => NewBill(image: imageFile));
-                    },
-                    text: 'Screenshot and pdf'),
+                            pdfFile = await imageToPdf(imageFile);
+                            await saveUint8ListToFile(pdfFile, 'fileName.pdf');
+                            isSaving.value = false;
+
+                            Get.to(() => NewBill(
+                                image: imageFile,
+                                pdfPath: homeController.newBillPath));
+                          },
+                          text: 'Save and Continue'),
+                ),
               ),
               100.h.height
             ],
@@ -273,6 +279,43 @@ class Bill extends StatelessWidget {
         );
       }),
     );
+  }
+
+  Future<void> saveUint8ListToFile(Uint8List data, String fileName) async {
+    try {
+      // Get the external storage directory
+      Directory? externalDirectory = await getExternalStorageDirectory();
+
+      if (externalDirectory != null) {
+        // Specify the file path within the external storage directory
+        String filePath = '${externalDirectory.path}/$fileName';
+
+        // Write the Uint8List data to the file
+        await File(filePath).writeAsBytes(data);
+
+        print('File saved to: $filePath');
+        homeController.newBillPath = filePath;
+      } else {
+        print('External storage directory not available');
+      }
+    } catch (e) {
+      print('Error saving file: $e');
+    }
+  }
+
+  Future<Uint8List> imageToPdf(Uint8List imageBytes) async {
+    final pdf = pw.Document();
+
+    // Add a single page to the PDF document
+    pdf.addPage(pw.Page(
+      build: (context) {
+        final image = pw.MemoryImage(imageBytes);
+        return pw.Center(child: pw.Image(image));
+      },
+    ));
+
+    // Save the PDF document as a Uint8List
+    return pdf.save();
   }
 
   Widget selectProduct() {
