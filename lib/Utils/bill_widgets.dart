@@ -62,10 +62,13 @@ Widget selectProduct() {
               ])));
 }
 
-Widget padText(txt) {
+Widget padText(txt, {void Function()? onLongPress}) {
   return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
-      child: Padding(padding: EdgeInsets.all(4.h), child: text10Black('$txt')));
+      child: GestureDetector(
+          onLongPress: onLongPress,
+          child: Padding(
+              padding: EdgeInsets.all(4.h), child: text10Black('$txt'))));
 }
 
 Widget padCenterText(txt) {
