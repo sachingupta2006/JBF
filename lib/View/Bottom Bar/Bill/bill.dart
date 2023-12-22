@@ -61,172 +61,181 @@ class Bill extends StatelessWidget {
                         // margin: EdgeInsets.all(6.w),
                         padding: EdgeInsets.all(6.w),
                         decoration: BoxDecoration(border: Border.all()),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    text15BlackBold('Jay Bajrang Foods'),
-                                    text15Black(
-                                        'Date: ${DateTime.now().toString().substring(0, 10)}')
-                                  ]),
-                              5.h.height,
-                              text12Black(
-                                  'Kashimira, Navin Gaothan, S No.82 Part 1, St.Xavier School Road, Mira Road(E) Maharashtra Thane - 401107 Mobile : 9699997596/8898200140'),
-                              5.h.height,
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    text12BlackBold('${cDetails['area']}'),
-                                    text12BlackBold('Bill No: 1')
-                                  ]),
-                              SizedBox(
-                                height: 18.h,
-                                child: Row(
+                        child: SingleChildScrollView(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      text15BlackBold('Jay Bajrang Foods'),
+                                      text15Black(
+                                          'Date: ${DateTime.now().toString().substring(0, 10)}')
+                                    ]),
+                                5.h.height,
+                                text12Black(
+                                    'Kashimira, Navin Gaothan, S No.82 Part 1, St.Xavier School Road, Mira Road(E) Maharashtra Thane - 401107 Mobile : 9699997596/8898200140'),
+                                5.h.height,
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      text12BlackBold('${cDetails['area']}'),
+                                      text12BlackBold('Bill No: 1')
+                                    ]),
+                                SizedBox(
+                                  height: 18.h,
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        text12Black('Salesman Name :  '),
+                                        Obx(() => DropdownButton(
+                                            iconSize: 0,
+                                            elevation: 0,
+                                            underline: 0.0.height,
+                                            items: homeController.salesmanNames
+                                                .map((value) =>
+                                                    DropdownMenuItem(
+                                                        alignment:
+                                                            Alignment.topLeft,
+                                                        value: value,
+                                                        child: text12BlackBold(
+                                                            value)))
+                                                .toList(),
+                                            onChanged: (newValue) =>
+                                                homeController.selectedSalesman
+                                                        .value =
+                                                    newValue.toString(),
+                                            value: homeController
+                                                .selectedSalesman.value))
+                                      ]),
+                                ),
+                                Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      text12Black('Salesman Name :  '),
-                                      Obx(() => DropdownButton(
-                                          iconSize: 0,
-                                          elevation: 0,
-                                          underline: 0.0.height,
-                                          items: homeController.salesmanNames
-                                              .map((value) => DropdownMenuItem(
-                                                  alignment: Alignment.topLeft,
-                                                  value: value,
-                                                  child:
-                                                      text12BlackBold(value)))
-                                              .toList(),
-                                          onChanged: (newValue) =>
-                                              homeController.selectedSalesman
-                                                  .value = newValue.toString(),
-                                          value: homeController
-                                              .selectedSalesman.value))
+                                      Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          child: GestureDetector(
+                                              onTap: () => Get.to(
+                                                  () => SearchCustomer()),
+                                              child: text15BlackBoldCenter(
+                                                  '${cDetails['name']}'))),
+                                      text12Black('${cDetails['phone']}')
                                     ]),
-                              ),
-                              Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        child: GestureDetector(
-                                            onTap: () =>
-                                                Get.to(() => SearchCustomer()),
-                                            child: text15BlackBoldCenter(
-                                                '${cDetails['name']}'))),
-                                    text12Black('${cDetails['phone']}')
-                                  ]),
-                              // 4.h.height,
-                              text12Black('${cDetails['address']}'),
-                              4.h.height,
-                              Table(
-                                  columnWidths: {
-                                    0: FlexColumnWidth(2.5), // Item Name
-                                    1: FlexColumnWidth(1), // Quantity
-                                    2: FlexColumnWidth(1), // Rate
-                                    3: FlexColumnWidth(
-                                        1.3), // Total${data[index]['billNo']}
-                                  },
-                                  border: TableBorder.all(),
-                                  children: [
-                                    TableRow(
-                                      children: [
-                                        padText(' Item Name'),
-                                        padCenterText('(KG)'),
-                                        padCenterText('Rate'),
-                                        padCenterText('Total'),
-                                      ],
-                                    ),
-                                    ...List.generate(4, (indx) {
-                                      var products =
-                                          homeController.jBFproducts[indx];
-                                      var rateCont =
-                                          homeController.existingRateTEC[indx];
-                                      var qCont = homeController
-                                          .existingQuantityTEC[indx];
-                                      double a = rateCont.text == ''
-                                          ? 0
-                                          : double.parse(rateCont.text);
-                                      double b = qCont.text == ''
-                                          ? 0
-                                          : double.parse(qCont.text);
-                                      String totalAmount = '${a * b}';
-                                      return TableRow(
+                                // 4.h.height,
+                                text12Black('${cDetails['address']}'),
+                                4.h.height,
+                                Table(
+                                    columnWidths: {
+                                      0: FlexColumnWidth(2.5), // Item Name
+                                      1: FlexColumnWidth(1), // Quantity
+                                      2: FlexColumnWidth(1), // Rate
+                                      3: FlexColumnWidth(
+                                          1.3), // Total${data[index]['billNo']}
+                                    },
+                                    border: TableBorder.all(),
+                                    children: [
+                                      TableRow(
                                         children: [
-                                          padText(products),
-                                          textFieldInt(controller: qCont),
-                                          textFieldInt(controller: rateCont),
-                                          textFieldInt(
-                                              showCursor: false,
-                                              keyboardType: TextInputType.none,
-                                              text: totalAmount == '0.0' ||
-                                                      totalAmount == '0'
-                                                  ? ''
-                                                  : totalAmount)
+                                          padText(' Item Name'),
+                                          padCenterText('(KG)'),
+                                          padCenterText('Rate'),
+                                          padCenterText('Total'),
                                         ],
-                                      );
-                                    }),
-                                    ...List.generate(
-                                        homeController.selectedProductList
-                                            .length, (indx) {
-                                      var rateCont =
-                                          homeController.newRateTEC[indx];
-                                      var qCont =
-                                          homeController.newQuantityTEC[indx];
-                                      double a = rateCont.text == ''
-                                          ? 0
-                                          : double.parse(rateCont.text);
-                                      double b = qCont.text == ''
-                                          ? 0
-                                          : double.parse(qCont.text);
-                                      String totalAmount = '${a * b}';
-                                      return TableRow(
-                                        children: [
-                                          padText(homeController
-                                              .selectedProductList[indx]),
-                                          textFieldInt(controller: qCont),
-                                          textFieldInt(controller: rateCont),
-                                          textFieldInt(
-                                              showCursor: false,
-                                              keyboardType: TextInputType.none,
-                                              text: totalAmount == '0.0' ||
-                                                      totalAmount == '0'
-                                                  ? ''
-                                                  : totalAmount)
-                                        ],
-                                      );
-                                    }),
-                                    purana(),
-                                    TableRow(children: [
-                                      GestureDetector(
-                                          onTap: () =>
-                                              Get.bottomSheet(selectProduct()),
-                                          child: Container(child: Text(''))),
-                                      padCenterText(''),
-                                      textFieldInt(
-                                          showCursor: false,
-                                          keyboardType: TextInputType.none,
-                                          text: ''),
-                                      padCenterText('')
-                                    ]),
-                                    TableRow(children: [
-                                      padCenterText('Grand Total'),
-                                      padCenterText(
-                                          '${homeController.grandTotalQuantity()}'),
-                                      padCenterText(''),
-                                      padCenterText(
-                                          '${homeController.grandTotalAll()}')
+                                      ),
+                                      ...List.generate(4, (indx) {
+                                        var products =
+                                            homeController.jBFproducts[indx];
+                                        var rateCont = homeController
+                                            .existingRateTEC[indx];
+                                        var qCont = homeController
+                                            .existingQuantityTEC[indx];
+                                        double a = rateCont.text == ''
+                                            ? 0
+                                            : double.parse(rateCont.text);
+                                        double b = qCont.text == ''
+                                            ? 0
+                                            : double.parse(qCont.text);
+                                        String totalAmount = '${a * b}';
+                                        return TableRow(
+                                          children: [
+                                            padText(products),
+                                            textFieldInt(controller: qCont),
+                                            textFieldInt(controller: rateCont),
+                                            textFieldInt(
+                                                showCursor: false,
+                                                keyboardType:
+                                                    TextInputType.none,
+                                                text: totalAmount == '0.0' ||
+                                                        totalAmount == '0'
+                                                    ? ''
+                                                    : totalAmount)
+                                          ],
+                                        );
+                                      }),
+                                      ...List.generate(
+                                          homeController.selectedProductList
+                                              .length, (indx) {
+                                        var rateCont =
+                                            homeController.newRateTEC[indx];
+                                        var qCont =
+                                            homeController.newQuantityTEC[indx];
+                                        double a = rateCont.text == ''
+                                            ? 0
+                                            : double.parse(rateCont.text);
+                                        double b = qCont.text == ''
+                                            ? 0
+                                            : double.parse(qCont.text);
+                                        String totalAmount = '${a * b}';
+                                        return TableRow(
+                                          children: [
+                                            padText(homeController
+                                                .selectedProductList[indx]),
+                                            textFieldInt(controller: qCont),
+                                            textFieldInt(controller: rateCont),
+                                            textFieldInt(
+                                                showCursor: false,
+                                                keyboardType:
+                                                    TextInputType.none,
+                                                text: totalAmount == '0.0' ||
+                                                        totalAmount == '0'
+                                                    ? ''
+                                                    : totalAmount)
+                                          ],
+                                        );
+                                      }),
+                                      purana(),
+                                      TableRow(children: [
+                                        GestureDetector(
+                                            onTap: () => Get.bottomSheet(
+                                                selectProduct()),
+                                            child: Container(child: Text(''))),
+                                        padCenterText(''),
+                                        textFieldInt(
+                                            showCursor: false,
+                                            keyboardType: TextInputType.none,
+                                            text: ''),
+                                        padCenterText('')
+                                      ]),
+                                      TableRow(children: [
+                                        padCenterText('Grand Total'),
+                                        padCenterText(
+                                            '${homeController.grandTotalQuantity()}'),
+                                        padCenterText(''),
+                                        padCenterText(
+                                            '${homeController.grandTotalAll()}')
+                                      ])
                                     ])
-                                  ])
-                            ])))),
+                              ]),
+                        )))),
             20.h.height,
             Padding(
                 padding: const EdgeInsets.all(8),
@@ -235,7 +244,9 @@ class Bill extends StatelessWidget {
                     : CommonButton(
                         ontap: () async {
                           isSaving.value = true;
-                          await screenshotController.capture(pixelRatio: 3.0).then((value) {
+                          await screenshotController
+                              .capture(pixelRatio: 3.0)
+                              .then((value) {
                             imageFile = value!;
                           });
 
