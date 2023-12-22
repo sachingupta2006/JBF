@@ -8,3 +8,7 @@ extension IntExtensions on double? {
   Widget get height => SizedBox(height: this?.toDouble());
   Widget get width => SizedBox(width: this?.toDouble());
 }
+
+Widget blank() {
+  return 0.0.height;
+}

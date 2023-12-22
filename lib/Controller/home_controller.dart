@@ -161,7 +161,7 @@ class HomeController extends GetxController {
 
   var puranaCheckBox = false.obs;
 
-  var salesmanNames = ['Badal', 'Manoj', 'Vinod'].obs;
+  var salesmanNames = ['Badal', 'Manoj', 'Vinod','Sagar'].obs;
   var selectedSalesman = 'Manoj'.obs;
 
   String newBillPath = '';
