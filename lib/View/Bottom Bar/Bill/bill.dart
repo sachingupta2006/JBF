@@ -58,7 +58,7 @@ class Bill extends StatelessWidget {
                 child: AspectRatio(
                     aspectRatio: 1 / 1.41,
                     child: Container(
-                        margin: EdgeInsets.all(6.w),
+                        // margin: EdgeInsets.all(6.w),
                         padding: EdgeInsets.all(6.w),
                         decoration: BoxDecoration(border: Border.all()),
                         child: Column(
@@ -235,7 +235,7 @@ class Bill extends StatelessWidget {
                     : CommonButton(
                         ontap: () async {
                           isSaving.value = true;
-                          await screenshotController.capture().then((value) {
+                          await screenshotController.capture(pixelRatio: 3.0).then((value) {
                             imageFile = value!;
                           });
 

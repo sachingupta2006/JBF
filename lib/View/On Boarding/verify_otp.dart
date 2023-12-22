@@ -49,7 +49,7 @@ class VerifyOTP extends StatelessWidget {
                           await FirebaseAuth.instance
                               .signInWithCredential(credential)
                               .then((value) async {
-                            Get.to(() => CustomBottomBar());
+                            Get.offAll(() => CustomBottomBar());
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             await prefs.setBool('onBoardDone', true);

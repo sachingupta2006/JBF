@@ -33,7 +33,9 @@ Future<Uint8List> imageToPdf(Uint8List imageBytes) async {
   pdf.addPage(pw.Page(
     build: (context) {
       final image = pw.MemoryImage(imageBytes);
-      return pw.Center(child: pw.Image(image));
+      return pw.Center(
+          child:
+              pw.Image(image, width: double.infinity));
     },
   ));
 
