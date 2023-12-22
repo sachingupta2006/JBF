@@ -25,7 +25,12 @@ class NewBill extends StatelessWidget {
             child: CommonButton(
                 ontap: () {
                   print('sachin:$pdfPath');
-                  FlutterShare.shareFile(title: 'title', filePath: pdfPath);
+                  FlutterShare.shareFile(
+                      title: 'jbf bill',
+                      filePath: pdfPath,
+                      fileType: 'application/pdf',
+                      chooserTitle: 'chooserTitle',
+                      text: 'text');
                 },
                 text: 'Share'),
           )

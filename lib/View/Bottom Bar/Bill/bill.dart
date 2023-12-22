@@ -1,8 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jbf/Utils/bill_functions.dart';
+import 'package:jbf/Utils/bill_widgets.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/Utils/text.dart';
@@ -10,9 +11,7 @@ import 'package:jbf/View/Bottom%20Bar/Bill/new_bill.dart';
 import 'package:jbf/View/Bottom%20Bar/Customer/perticular_customer_details.dart';
 import 'package:jbf/View/Bottom%20Bar/Bill/search_customer.dart';
 import 'package:jbf/main.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 Uint8List imageFile = Uint8List(0);
 Uint8List pdfFile = Uint8List(0);
@@ -49,6 +48,8 @@ class Bill extends StatelessWidget {
         body: Obx(() {
           var cDetails = homeController
               .customerDetails[homeController.customerIndex.value];
+          var pdfFileName =
+              'billNo ${cDetails['name']} ${cDetails['code']} ${DateTime.now().toString().substring(0, 16)}';
 
           return SingleChildScrollView(
               child: Column(children: [
@@ -228,197 +229,29 @@ class Bill extends StatelessWidget {
                             ])))),
             20.h.height,
             Padding(
-              padding: const EdgeInsets.all(8),
-              child: Obx(
-                () => isSaving.value
+                padding: const EdgeInsets.all(8),
+                child: Obx(() => isSaving.value
                     ? const Center(child: CircularProgressIndicator())
                     : CommonButton(
                         ontap: () async {
                           isSaving.value = true;
                           await screenshotController.capture().then((value) {
                             imageFile = value!;
-                            Get.snackbar('Success', 'image created');
                           });
 
                           pdfFile = await imageToPdf(imageFile);
-                          await saveUint8ListToFile(pdfFile, 'fileName.pdf');
+                          await saveUint8ListToFile(
+                              pdfFile, '$pdfFileName.pdf');
                           isSaving.value = false;
 
+                          Get.snackbar('Success', 'pdf saved to local storage');
                           Get.to(() => NewBill(
                               image: imageFile,
                               pdfPath: homeController.newBillPath));
                         },
-                        text: 'Save and Continue'),
-              ),
-            ),
+                        text: 'Save and Continue'))),
             100.h.height
           ]));
         }));
   }
-
-  TableRow purana() {
-    return !homeController.puranaCheckBox.value
-        ? TableRow(children: [blank(), blank(), blank(), blank()])
-        : TableRow(children: [
-            padText(' Purana'),
-            Text(''),
-            Text(''),
-            textFieldInt(controller: homeController.puranaTEC)
-          ]);
-  }
-
-  Future<void> saveUint8ListToFile(Uint8List data, String fileName) async {
-    try {
-      // Get the external storage directory
-      Directory? externalDirectory = await getExternalStorageDirectory();
-
-      if (externalDirectory != null) {
-        // Specify the file path within the external storage directory
-        String filePath = '${externalDirectory.path}/$fileName';
-
-        // Write the Uint8List data to the file
-        await File(filePath).writeAsBytes(data);
-
-        print('File saved to: $filePath');
-        homeController.newBillPath = filePath;
-      } else {
-        print('External storage directory not available');
-      }
-    } catch (e) {
-      print('Error saving file: $e');
-    }
-  }
-
-  Future<Uint8List> imageToPdf(Uint8List imageBytes) async {
-    final pdf = pw.Document();
-
-    // Add a single page to the PDF document
-    pdf.addPage(pw.Page(
-      build: (context) {
-        final image = pw.MemoryImage(imageBytes);
-        return pw.Center(child: pw.Image(image));
-      },
-    ));
-
-    // Save the PDF document as a Uint8List
-    return pdf.save();
-  }
-
-  Widget selectProduct() {
-    return Container(
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            10.h.height,
-            Row(
-              children: [
-                30.w.width,
-                Text('Select Product',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Divider(color: Colors.black, thickness: 1, height: 10.h),
-            Row(
-              children: [
-                Obx(
-                  () => Checkbox(
-                    value: homeController.puranaCheckBox.value,
-                    onChanged: (value) {
-                      homeController.puranaCheckBox.value =
-                          !homeController.puranaCheckBox.value;
-                    },
-                  ),
-                ),
-                Text('Purana', style: TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 20.h.height,
-                ...List.generate(homeController.jBFproducts.length - 4,
-                    (index) {
-                  return InkWell(
-                    onTap: () async {
-                      homeController.productsSelectedSet
-                          .add(homeController.jBFproducts[index + 4]);
-                      homeController.addProductToTableFunc();
-                      await homeController.newRateNquantityTecAdd();
-                      Get.back();
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 10.h),
-                      child: Text(homeController.jBFproducts[index + 4],
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16.sp)),
-                    ),
-                  );
-                })
-              ],
-            ),
-            50.h.height
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget padText(txt) {
-    return TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Padding(
-          padding: EdgeInsets.all(4.h),
-          child: text10Black('$txt'),
-        ));
-  }
-
-  Widget padCenterText(txt) {
-    return TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Center(
-            child: Padding(
-          padding: EdgeInsets.all(4.h),
-          child: text12Black('$txt'),
-        )));
-  }
-}
-
-Widget textFieldInt(
-    {TextEditingController? controller,
-    String? text,
-    bool? showCursor = true,
-    TextInputType? keyboardType}) {
-  return TableCell(
-    verticalAlignment: TableCellVerticalAlignment.middle,
-    child: SizedBox(
-      height: 38.h,
-      child: TextFormField(
-        cursorHeight: 13.h,
-        style: TextStyle(fontSize: 12.sp),
-        showCursor: showCursor,
-        controller: controller,
-        textAlign: TextAlign.center,
-        keyboardType:
-            keyboardType ?? TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$')),
-        ],
-        decoration: InputDecoration(
-            hintText: text,
-            hintStyle: TextStyle(color: Colors.black, fontSize: 12.sp),
-            border: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0)),
-      ),
-    ),
-  );
 }
