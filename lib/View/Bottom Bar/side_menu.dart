@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:jbf/Utils/text.dart';
+import 'package:jbf/View/Bottom%20Bar/chat/chat.dart';
 
 Widget drawerCustom(context) {
   return SafeArea(
@@ -17,6 +20,11 @@ Widget drawerCustom(context) {
             children: [
               Text('Konsa Konsa Feater chaiye batao'),
               Divider(thickness: 1.w),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => ChatsCC());
+                  },
+                  child: text10Black('chats'))
             ],
           )));
 }
