@@ -5,6 +5,7 @@ import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/sizebox.dart';
 import 'package:jbf/View/Bottom%20Bar/All%20Bills/all_bills.dart';
 import 'package:jbf/View/Bottom%20Bar/Bill/bill.dart';
+import 'package:jbf/View/Bottom%20Bar/side_menu.dart';
 import 'Customer/add_customers.dart';
 import 'Products/add_products.dart';
 
@@ -91,23 +92,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
   }
 
   Widget drawer() {
-    return SafeArea(
-        child: Container(
-            width: MediaQuery.sizeOf(context).width / 1.5,
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 50.h),
-            height: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(25),
-                  bottomRight: Radius.circular(25),
-                )),
-            child: Column(
-              children: [
-                Text('Konsa Konsa Feater chaiye batao'),
-                Divider(thickness: 1.w),
-              ],
-            )));
+    return drawerCustom(context);
   }
 
   Widget activeIcon(int index) {
