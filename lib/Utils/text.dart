@@ -25,6 +25,10 @@ Widget text12BlackBold(String txt) {
       style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold));
 }
 
+Widget text6Black(String txt) {
+  return Text(txt, style: TextStyle(fontSize: 6.sp));
+}
+
 Widget text8Black(String txt) {
   return Text(txt, style: TextStyle(fontSize: 8.sp));
 }

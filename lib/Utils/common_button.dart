@@ -9,15 +9,22 @@ class CommonButton extends StatelessWidget {
     required this.text,
     this.colorchange = false,
     this.size,
+    this.hPadding,
+    this.vPadding,
   }) : super(key: key);
 
   final bool colorchange;
   final GestureTapCallback? ontap;
   final String text;
   final double? size;
+  final double? hPadding;
+  final double? vPadding;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+        padding: EdgeInsets.symmetric(
+            horizontal: hPadding ?? 0, vertical: vPadding ?? 0),
         width: double.infinity,
         height: 60.h,
         child: ElevatedButton(
