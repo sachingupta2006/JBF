@@ -70,124 +70,9 @@ class Bill extends StatelessWidget {
                                       children: [
                                         companyandCustomerDetails(
                                             cDetails, context),
-                                        Table(
-                                            columnWidths: {
-                                              0: FlexColumnWidth(
-                                                  2.5), // Item Name
-                                              1: FlexColumnWidth(1), // Quantity
-                                              2: FlexColumnWidth(1), // Rate
-                                              3: FlexColumnWidth(
-                                                  1.3), // Total${data[index]['billNo']}
-                                            },
-                                            border: TableBorder.all(),
-                                            children: [
-                                              TableRow(
-                                                children: [
-                                                  padText(' Item Name'),
-                                                  padCenterText('(KG)'),
-                                                  padCenterText('Rate'),
-                                                  padCenterText('Total'),
-                                                ],
-                                              ),
-                                              ...List.generate(4, (indx) {
-                                                var products = homeController
-                                                    .jBFproducts[indx];
-                                                var rateCont = homeController
-                                                    .existingRateTEC[indx];
-                                                var qCont = homeController
-                                                    .existingQuantityTEC[indx];
-                                                double a = rateCont.text == ''
-                                                    ? 0
-                                                    : double.parse(
-                                                        rateCont.text);
-                                                double b = qCont.text == ''
-                                                    ? 0
-                                                    : double.parse(qCont.text);
-                                                String totalAmount = '${a * b}';
-                                                return TableRow(
-                                                  children: [
-                                                    padText(products),
-                                                    textFieldInt(
-                                                        controller: qCont),
-                                                    textFieldInt(
-                                                        controller: rateCont),
-                                                    textFieldInt(
-                                                        showCursor: false,
-                                                        keyboardType:
-                                                            TextInputType.none,
-                                                        text: totalAmount ==
-                                                                    '0.0' ||
-                                                                totalAmount ==
-                                                                    '0'
-                                                            ? ''
-                                                            : totalAmount)
-                                                  ],
-                                                );
-                                              }),
-                                              ...List.generate(
-                                                  homeController
-                                                      .selectedProductList
-                                                      .length, (indx) {
-                                                var rateCont = homeController
-                                                    .newRateTEC[indx];
-                                                var qCont = homeController
-                                                    .newQuantityTEC[indx];
-                                                double a = rateCont.text == ''
-                                                    ? 0
-                                                    : double.parse(
-                                                        rateCont.text);
-                                                double b = qCont.text == ''
-                                                    ? 0
-                                                    : double.parse(qCont.text);
-                                                String totalAmount = '${a * b}';
-                                                return TableRow(
-                                                  children: [
-                                                    padText(homeController
-                                                            .selectedProductList[
-                                                        indx]),
-                                                    textFieldInt(
-                                                        controller: qCont),
-                                                    textFieldInt(
-                                                        controller: rateCont),
-                                                    textFieldInt(
-                                                        showCursor: false,
-                                                        keyboardType:
-                                                            TextInputType.none,
-                                                        text: totalAmount ==
-                                                                    '0.0' ||
-                                                                totalAmount ==
-                                                                    '0'
-                                                            ? ''
-                                                            : totalAmount)
-                                                  ],
-                                                );
-                                              }),
-                                              purana(),
-                                              TableRow(children: [
-                                                GestureDetector(
-                                                    onTap: () =>
-                                                        Get.bottomSheet(
-                                                            selectProduct()),
-                                                    child: Container(
-                                                        child: Text(''))),
-                                                padCenterText(''),
-                                                textFieldInt(
-                                                    showCursor: false,
-                                                    keyboardType:
-                                                        TextInputType.none,
-                                                    text: ''),
-                                                padCenterText('')
-                                              ]),
-                                              TableRow(children: [
-                                                padCenterText('Grand Total'),
-                                                padCenterText(
-                                                    '${homeController.grandTotalQuantity()}'),
-                                                padCenterText(''),
-                                                padCenterText(
-                                                    '${homeController.grandTotalAll()}')
-                                              ])
-                                            ])
+                                        billTable()
                                       ]))),
+                          totalTable(),
                           termsAndConditions(context)
                         ])))),
             20.h.height,
@@ -195,6 +80,101 @@ class Bill extends StatelessWidget {
             100.h.height
           ]));
         }));
+  }
+
+  Widget billTable() {
+    return Table(
+        columnWidths: {
+          0: FlexColumnWidth(2.5), // Item Name
+          1: FlexColumnWidth(1), // Quantity
+          2: FlexColumnWidth(1), // Rate
+          3: FlexColumnWidth(1.3), // Total${data[index]['billNo']}
+        },
+        border: TableBorder.all(),
+        children: [
+          TableRow(
+            children: [
+              padText(' Item Name'),
+              padCenterText('(KG)'),
+              padCenterText('Rate'),
+              padCenterText('Total'),
+            ],
+          ),
+          ...List.generate(4, (indx) {
+            var products = homeController.jBFproducts[indx];
+            var rateCont = homeController.existingRateTEC[indx];
+            var qCont = homeController.existingQuantityTEC[indx];
+            double a = rateCont.text == '' ? 0 : double.parse(rateCont.text);
+            double b = qCont.text == '' ? 0 : double.parse(qCont.text);
+            String totalAmount = '${a * b}';
+            return TableRow(
+              children: [
+                padText(products),
+                textFieldInt(controller: qCont),
+                textFieldInt(controller: rateCont),
+                textFieldInt(
+                    showCursor: false,
+                    keyboardType: TextInputType.none,
+                    text: totalAmount == '0.0' || totalAmount == '0'
+                        ? ''
+                        : totalAmount)
+              ],
+            );
+          }),
+          ...List.generate(homeController.selectedProductList.length, (indx) {
+            var rateCont = homeController.newRateTEC[indx];
+            var qCont = homeController.newQuantityTEC[indx];
+            double a = rateCont.text == '' ? 0 : double.parse(rateCont.text);
+            double b = qCont.text == '' ? 0 : double.parse(qCont.text);
+            String totalAmount = '${a * b}';
+            return TableRow(
+              children: [
+                padText(homeController.selectedProductList[indx]),
+                textFieldInt(controller: qCont),
+                textFieldInt(controller: rateCont),
+                textFieldInt(
+                    showCursor: false,
+                    keyboardType: TextInputType.none,
+                    text: totalAmount == '0.0' || totalAmount == '0'
+                        ? ''
+                        : totalAmount)
+              ],
+            );
+          }),
+          purana(),
+        ]);
+  }
+
+  Widget totalTable() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 6.w),
+      child: Table(
+        columnWidths: {
+          0: FlexColumnWidth(2.5), // Item Name
+          1: FlexColumnWidth(1), // Quantity
+          2: FlexColumnWidth(1), // Rate
+          3: FlexColumnWidth(1.3), // Total${data[index]['billNo']}
+        },
+        border: TableBorder.all(),
+        children: [
+          TableRow(children: [
+            GestureDetector(
+                onTap: () => Get.bottomSheet(selectProduct()),
+                child: Container(child: Text(''))),
+            padCenterText(''),
+            textFieldInt(
+                showCursor: false, keyboardType: TextInputType.none, text: ''),
+            padCenterText('')
+          ]),
+          TableRow(children: [
+            padCenterText('Grand Total'),
+            padCenterText('${homeController.grandTotalQuantity()}'),
+            padCenterText(''),
+            padCenterText('${homeController.grandTotalAll()}')
+          ])
+        ],
+      ),
+    );
   }
 
   Widget companyandCustomerDetails(cDetails, context) {
@@ -249,9 +229,7 @@ class Bill extends StatelessWidget {
             child: Container(
                 padding: EdgeInsets.only(left: 6.w),
                 decoration: BoxDecoration(
-                    border: Border(
-                        top: BorderSide(color: Colors.black),
-                        right: BorderSide(color: Colors.black))),
+                    border: Border(right: BorderSide(color: Colors.black))),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -263,8 +241,8 @@ class Bill extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(top: 2.h),
           width: MediaQuery.sizeOf(context).width / 3,
-          decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.black))),
+          // decoration: BoxDecoration(
+          // border: Border(top: BorderSide(color: Colors.black))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
