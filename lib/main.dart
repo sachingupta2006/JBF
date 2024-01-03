@@ -12,12 +12,13 @@ HomeController homeController = Get.put(HomeController());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: FirebaseOptions(
-          apiKey: "AIzaSyDdxWr6BIGlak6N3UgsjyUhqWYJf9RNwyA",
-          projectId: "jay-bajrang-foods",
-          messagingSenderId: "116821895318",
-          appId: "1:116821895318:web:b603c904d7998bd5f6fab7",
-          ));
+    // options: FirebaseOptions(
+    //   apiKey: "AIzaSyDdxWr6BIGlak6N3UgsjyUhqWYJf9RNwyA",
+    //   projectId: "jay-bajrang-foods",
+    //   messagingSenderId: "116821895318",
+    //   appId: "1:116821895318:web:b603c904d7998bd5f6fab7",
+    // ),
+  );
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool onboardDone = prefs.getBool("onBoardDone") ?? false;

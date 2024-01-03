@@ -112,12 +112,15 @@ class Bill extends StatelessWidget {
                 padText(products),
                 textFieldInt(controller: qCont),
                 textFieldInt(controller: rateCont),
-                textFieldInt(
-                    showCursor: false,
-                    keyboardType: TextInputType.none,
-                    text: totalAmount == '0.0' || totalAmount == '0'
-                        ? ''
-                        : totalAmount)
+                padCenterText(totalAmount == '0.0' || totalAmount == '0'
+                    ? ''
+                    : totalAmount),
+                // textFieldInt(
+                //     showCursor: false,
+                //     keyboardType: TextInputType.none,
+                //     text: totalAmount == '0.0' || totalAmount == '0'
+                //         ? ''
+                //         : totalAmount)
               ],
             );
           }),
@@ -131,13 +134,15 @@ class Bill extends StatelessWidget {
               children: [
                 padText(homeController.selectedProductList[indx]),
                 textFieldInt(controller: qCont),
-                textFieldInt(controller: rateCont),
-                textFieldInt(
-                    showCursor: false,
-                    keyboardType: TextInputType.none,
-                    text: totalAmount == '0.0' || totalAmount == '0'
+                textFieldInt(controller: rateCont),padCenterText( totalAmount == '0.0' || totalAmount == '0'
                         ? ''
                         : totalAmount)
+                // textFieldInt(
+                //     showCursor: false,
+                //     keyboardType: TextInputType.none,
+                //     text: totalAmount == '0.0' || totalAmount == '0'
+                //         ? ''
+                //         : totalAmount)
               ],
             );
           }),

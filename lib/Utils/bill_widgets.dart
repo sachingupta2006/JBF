@@ -98,7 +98,7 @@ Widget textFieldInt(
   return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
       child: SizedBox(
-          height: 38.h,
+          height: 32.h,
           child: TextFormField(
               cursorHeight: 13.h,
               style: TextStyle(fontSize: 12.sp),
@@ -117,5 +117,5 @@ Widget textFieldInt(
                   disabledBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 0, vertical: 0)))));
+                      EdgeInsets.only(top: 15.h,bottom: 15.h)))));
 }
