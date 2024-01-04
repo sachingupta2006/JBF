@@ -134,9 +134,10 @@ class Bill extends StatelessWidget {
               children: [
                 padText(homeController.selectedProductList[indx]),
                 textFieldInt(controller: qCont),
-                textFieldInt(controller: rateCont),padCenterText( totalAmount == '0.0' || totalAmount == '0'
-                        ? ''
-                        : totalAmount)
+                textFieldInt(controller: rateCont),
+                padCenterText(totalAmount == '0.0' || totalAmount == '0'
+                    ? ''
+                    : totalAmount)
                 // textFieldInt(
                 //     showCursor: false,
                 //     keyboardType: TextInputType.none,
@@ -147,7 +148,7 @@ class Bill extends StatelessWidget {
             );
           }),
           purana(),
-        ]);
+        ]); 
   }
 
   Widget totalTable() {
@@ -194,23 +195,24 @@ class Bill extends StatelessWidget {
         text12BlackBold('Bill No: 1')
       ]),
       SizedBox(
-          height: 18.h,
+          // height: 18.h,
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            text12Black('Salesman Name :  '),
-            Obx(() => DropdownButton(
-                iconSize: 0,
-                elevation: 0,
-                underline: 0.0.height,
-                items: homeController.salesmanNames
-                    .map((value) => DropdownMenuItem(
-                        alignment: Alignment.topLeft,
-                        value: value,
-                        child: text12BlackBold(value)))
-                    .toList(),
-                onChanged: (newValue) =>
-                    homeController.selectedSalesman.value = newValue.toString(),
-                value: homeController.selectedSalesman.value))
-          ])),
+        text12Black('Salesman Name :  '),
+        Obx(() => DropdownButton(
+            padding: EdgeInsets.zero,
+            iconSize: 0,
+            elevation: 0,
+            underline: 0.0.height,
+            items: homeController.salesmanNames
+                .map((value) => DropdownMenuItem(
+                    alignment: Alignment.topLeft,
+                    value: value,
+                    child: text12BlackBold(value)))
+                .toList(),
+            onChanged: (newValue) =>
+                homeController.selectedSalesman.value = newValue.toString(),
+            value: homeController.selectedSalesman.value))
+      ])),
       Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

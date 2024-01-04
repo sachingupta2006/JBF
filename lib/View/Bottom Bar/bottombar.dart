@@ -113,7 +113,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Icon(
                 bottomIcons[index],
-                size: 20.h,
+                size: 20.sp,
                 color: active ? Colors.blue : Colors.black,
               ),
               // Image.asset(active ? pngBlue[index] : pngBlack[index], width: 20),
