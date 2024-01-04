@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,14 +12,18 @@ HomeController homeController = Get.put(HomeController());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyDdxWr6BIGlak6N3UgsjyUhqWYJf9RNwyA",
-      projectId: "jay-bajrang-foods",
-      messagingSenderId: "116821895318",
-      appId: "1:116821895318:web:b603c904d7998bd5f6fab7",
-    ),
-  );
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: "AIzaSyDdxWr6BIGlak6N3UgsjyUhqWYJf9RNwyA",
+        projectId: "jay-bajrang-foods",
+        messagingSenderId: "116821895318",
+        appId: "1:116821895318:web:b603c904d7998bd5f6fab7",
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool onboardDone = prefs.getBool("onBoardDone") ?? false;
