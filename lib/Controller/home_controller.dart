@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 // import 'package:jbf/main.dart';
 
 class HomeController extends GetxController {
+
+  var myId = '7'.obs;
   var customerIndex = 0.obs;
   RxList<String> selectedProductList = <String>[].obs;
   Set<String> productsSelectedSet = {};

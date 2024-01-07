@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jbf/View/Side%20Menu/chat.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
+import 'chat.dart';
 import 'user_model.dart';
 
 class ChatsPage extends StatelessWidget {
@@ -52,7 +51,8 @@ class ChatsPage extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 Get.to(() => ChatPage(
-                    userId: userData[index].uid,
+                    senderId: '7',
+                    recieverId: userData[index].uid,
                     name: userData[index].name,
                     isOnline: userData[index].isOnline));
               },
