@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jbf/Utils/common_button.dart';
 import 'package:jbf/Utils/custom_textformfield.dart';
 import 'package:jbf/Utils/sizebox.dart';
+import 'package:jbf/View/Bottom%20Bar/Products/products_controller.dart';
 import 'package:jbf/main.dart';
 
 class AddProducts extends StatelessWidget {
@@ -11,42 +13,78 @@ class AddProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            leading: GestureDetector(
-                onTap: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                child: Icon(Icons.menu)),
-            title: Text('Add Products Details'),
-            actions: [
-              GestureDetector(
-                  onTap: () {
-                    Get.bottomSheet(addProduct(context));
-                  },
-                  child: Icon(Icons.add)),
-              20.w.width
-            ]),
-        body:
-            // Obx(() =>
-            ListView.builder(
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                    child: InkWell(
-                        onLongPress: () {
-                          Get.dialog(longPressWidget(index));
+    GetProducts getProducts = Get.put(GetProducts());
+    getProducts.fetchProducts();
+    return Obx(
+      () => getProducts.isLoading.value
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Scaffold(
+              appBar: AppBar(
+                  leading: GestureDetector(
+                      onTap: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      child: Icon(Icons.menu)),
+                  title: Text('Add Products Details'),
+                  actions: [
+                    GestureDetector(
+                        onTap: () {
+                          Get.bottomSheet(addProduct(context));
                         },
-                        child: Text(homeController.jBFproducts[index])),
-                  );
-                },
-                itemCount: homeController.jBFproducts.length)
-        // ),
-        );
+                        child: Icon(Icons.add)),
+                    20.w.width
+                  ]),
+              body:
+                  // Obx(() =>
+                  Column(
+                children: [
+                  // Row(
+                  //   children: [
+                  Expanded(
+                    child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 10.h),
+                            child: InkWell(
+                                onLongPress: () {
+                                  Get.dialog(longPressWidget(index));
+                                },
+                                child: Text(getProducts.products[index])),
+                          );
+                        },
+                        itemCount: getProducts.products.length),
+                  ),
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //       itemBuilder: (context, index) {
+                  //         return Padding(
+                  //           padding: EdgeInsets.symmetric(
+                  //               horizontal: 16.w, vertical: 10.h),
+                  //           child: InkWell(
+                  //               onLongPress: () {
+                  //                 Get.dialog(longPressWidget(index));
+                  //               },
+                  //               child: Text(
+                  //                   homeController.jBFproducts[index])),
+                  //         );
+                  //       },
+                  //       itemCount: homeController.jBFproducts.length),
+                  // ),
+                  //   ],
+                  // ),
+                ],
+              )
+              // ),
+              ),
+    );
   }
 
   AlertDialog longPressWidget(index) {
+    GetProducts getProducts = Get.put(GetProducts());
+
     return AlertDialog(
         contentPadding: EdgeInsets.all(25.w),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -81,9 +119,12 @@ class AddProducts extends StatelessWidget {
                                               size: 10.sp,
                                               text: 'Yes, Delete',
                                               ontap: () {
+                                                getProducts
+                                                    .deleteProductAtIndex(
+                                                        index);
                                                 Get.back();
-                                                homeController.jBFproducts
-                                                    .removeAt(index);
+                                                // homeController.jBFproducts
+                                                //     .removeAt(index);
                                               },
                                             ),
                                             20.h.height,
@@ -101,8 +142,9 @@ class AddProducts extends StatelessWidget {
                         text: 'Edit Product Details',
                         ontap: () {
                           Get.back();
-                          Get.bottomSheet(editCustomer(
-                              index, homeController.jBFproducts[index]));
+
+                          Get.bottomSheet(
+                              editCustomer(index, getProducts.products[index]));
                         })
                   ])
                 ])));
@@ -141,7 +183,12 @@ class AddProducts extends StatelessWidget {
                   CommonButton(
                       ontap: () async {
                         homeController.jBFproducts.add(productNameTEC.text);
-                        Get.back();
+                        FirebaseFirestore firestore =
+                            FirebaseFirestore.instance;
+                        await firestore.collection('Products').add({
+                          'Products Name': productNameTEC.text,
+                        });
+                        // Get.back();
                       },
                       text: 'Submit'),
                   // }),
@@ -156,6 +203,8 @@ class AddProducts extends StatelessWidget {
   }
 
   Widget editCustomer(int index, String name) {
+    GetProducts getProducts = Get.put(GetProducts());
+
     TextEditingController productNameTEC = TextEditingController(text: name);
     return Container(
       decoration: const BoxDecoration(
@@ -185,7 +234,10 @@ class AddProducts extends StatelessWidget {
                   20.h.height,
                   CommonButton(
                       ontap: () {
-                        homeController.jBFproducts[index] = productNameTEC.text;
+                        // homeController.jBFproducts[index] = productNameTEC.text;
+
+                        getProducts.editProductAtIndex(
+                            index, productNameTEC.text);
                         Get.back();
                       },
                       text: 'Save Changes'),
